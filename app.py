@@ -103,6 +103,9 @@ for country in countries:
 
     # Select only 'quarter' and 'value' columns, rename 'value' to 'GVA_value'
     filtered_data_GVA = filtered_data_GVA[['quarter', 'value']]
+    #Handling missing values for GVA
+    filtered_data_GVA['value'].fillna(method='bfill', inplace=True)
+    
     filtered_data_GVA = filtered_data_GVA.rename(columns={'value': f'{country}_GVA_value'})
 
     # Filter employment data for the given country, with similar filtering criteria (for employment)
@@ -114,6 +117,8 @@ for country in countries:
 
     # Select only 'quarter' and 'value' columns, rename 'value' to 'employment_value'
     filtered_data_employment = filtered_data_employment[['quarter', 'value']]
+    #Handling missing values for Employment
+    filtered_data_employment['value'].fillna(method='bfill', inplace=True)
     filtered_data_employment = filtered_data_employment.rename(columns={'value': f'{country}_employment_value'})
 
     # Filter labor demand data for the given country, similar criteria
@@ -122,6 +127,9 @@ for country in countries:
 
     # Select only 'quarter' and 'value' columns, rename 'value' to 'employment_value'
     filtered_data_labour_demand = filtered_data_labour_demand[['quarter', 'value']]
+    #Handling missing values for Labour Demand
+    filtered_data_labour_demand['value'].fillna(method='ffill', inplace=True)
+
     filtered_data_labour_demand = filtered_data_labour_demand.rename(columns={'value': f'{country}_labour_demand_value'})
 
     # Merge GVA data and employment data on the 'quarter' column, keep only common entries (inner join)
